@@ -20,7 +20,11 @@ export class UserService {
     }
 
     async list(): Promise<UserReturn[]> {
-        return await prisma.user.findMany({select: {id: true, name: true, email: true}})
+        return await prisma.user.findMany({ select: { id: true, name: true, email: true } })
+    }
+
+    async listOne(id: string): Promise<UserReturn> {
+        return await prisma.user.findFirst({ where: { id }, select: { id: true, name: true, email: true } });
     }
 
 }
