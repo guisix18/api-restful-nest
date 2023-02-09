@@ -1,18 +1,14 @@
-import { Prisma } from "@prisma/client";
-import { Length, IsEmail, IsUUID, IsNotEmpty} from "class-validator";
+import { IsEmail, IsNotEmpty, MinLength } from "class-validator";
 
 export class UserBodyDto {
-    @IsUUID()
-    id: string;
-
-    @IsNotEmpty()
+    @IsNotEmpty({ message: "The name field can't be empty." })
     name: string;
 
-    @IsEmail()
+    @IsEmail(undefined, { message: 'Email is not valid' })
     email: string;
 
     @IsNotEmpty()
-    @Length(6, 30)
+    @MinLength(8, { message: 'The password has to be greater or equal than 8' })
     password: string
 }
 
