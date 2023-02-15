@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { UserBodyDto, UserReturn } from "./dto/user.dto";
+import { UserBodyDto, UserBodyUpdateDto, UserReturn } from "./dto/user.dto";
 import { prisma } from "prisma/client/client";
 import { randomUUID } from "crypto";
 
@@ -27,4 +27,24 @@ export class UserService {
         return await prisma.user.findFirst({ where: { id }, select: { id: true, name: true, email: true } });
     }
 
+    async update(id: string, body: UserBodyUpdateDto): Promise<UserReturn> {
+        const findUser = await prisma.user.findFirst({ where: { id } });
+
+        const userUpdated = await prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                name: body.name ? body.name : findUser.name,
+                email: body.email ? body.email : findUser.email,
+                password: body.password ? body.password : findUser.password
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true
+            }
+        })
+        return userUpdated;
+    }
 }
