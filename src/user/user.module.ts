@@ -2,6 +2,7 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { VerifyIdMiddleware } from '../middlewares/userId.middleware';
+import { VerifyUserEmailMiddleware } from 'src/middlewares/verifyUserEmail.middleware';
 
 @Module({
   imports: [],
@@ -10,6 +11,12 @@ import { VerifyIdMiddleware } from '../middlewares/userId.middleware';
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(VerifyIdMiddleware).forRoutes({ path: 'user/:id', method: RequestMethod.GET}, {path: "user/:id", method: RequestMethod.PUT});
+    consumer
+    .apply(VerifyIdMiddleware)
+    .forRoutes({ path: 'user/:id', method: RequestMethod.GET }, { path: "user/:id", method: RequestMethod.PUT });
+    
+    consumer
+    .apply(VerifyUserEmailMiddleware)
+    .forRoutes({ path: 'user', method: RequestMethod.POST });
   }
 }
