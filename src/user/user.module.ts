@@ -12,11 +12,13 @@ import { VerifyUserEmailMiddleware } from 'src/middlewares/verifyUserEmail.middl
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(VerifyIdMiddleware)
-    .forRoutes({ path: 'user/:id', method: RequestMethod.GET }, { path: "user/:id", method: RequestMethod.PUT });
-    
+      .apply(VerifyIdMiddleware)
+      .forRoutes({ path: 'user/:id', method: RequestMethod.GET },
+        { path: "user/:id", method: RequestMethod.PUT },
+        { path: "user/:id", method: RequestMethod.DELETE });
+
     consumer
-    .apply(VerifyUserEmailMiddleware)
-    .forRoutes({ path: 'user', method: RequestMethod.POST });
+      .apply(VerifyUserEmailMiddleware)
+      .forRoutes({ path: 'user', method: RequestMethod.POST });
   }
 }
