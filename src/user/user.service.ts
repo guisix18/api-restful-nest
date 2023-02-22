@@ -47,4 +47,11 @@ export class UserService {
         })
         return userUpdated;
     }
+
+    async delete(id: string): Promise<void> {
+        await prisma.user.delete({
+            where: { id }
+        })
+        return;
+    }
 }
