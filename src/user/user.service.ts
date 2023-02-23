@@ -62,14 +62,12 @@ export class UserService {
                 name: body.name ? body.name : findUser.name,
                 email: body.email ? body.email : findUser.email,
                 password: body.password ? body.password : findUser.password,
-            },
-            select: {
-                id: true,
-                name: true,
-                email: true,
-            },
+            }
         });
-        return userUpdated;
+        return {
+            ...userUpdated,
+            password: undefined
+        };
     }
 
     async delete(id: string): Promise<void> {
