@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { UserBodyDto, UserBodyUpdateDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
@@ -18,12 +19,14 @@ import { UserService } from './user.service';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @IsPublic()
   @Post()
   async createUser(@Res() response: Response, @Body() body: UserBodyDto) {
     const user = await this.userService.create(body);
     return response.status(201).send(user);
   }
 
+  @IsPublic()
   @Get()
   async getUser(@Res() response: Response) {
     const users = await this.userService.list();
