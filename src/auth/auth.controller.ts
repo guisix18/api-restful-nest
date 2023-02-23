@@ -1,6 +1,7 @@
 import { Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
+import { IsPublic } from './decorators/is-public.decorator';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/AuthRequest';
 
@@ -8,6 +9,7 @@ import { AuthRequest } from './models/AuthRequest';
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
+    @IsPublic()
     @Post('login')
     @UseGuards(LocalAuthGuard)
     async login(@Res() response: Response, @Req() request: AuthRequest) {
