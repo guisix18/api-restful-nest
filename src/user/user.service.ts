@@ -78,4 +78,10 @@ export class UserService {
         });
         return;
     }
+
+    async findByEmail(email: string): Promise<User> {
+        return await this.prisma.user.findUnique({
+            where: { email }
+        })
+    }
 }
