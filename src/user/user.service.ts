@@ -15,10 +15,18 @@ export class UserService {
         const data: Prisma.UserCreateInput = {
             id: randomUUID(),
             ...dto,
-            password: await bcrypt.hash(dto.password, 8)
+            password: await bcrypt.hash(dto.password, 8),
         }
 
-        const createUser = await this.prisma.user.create({ data });
+        const createUser = await this.prisma.user.create({
+            data,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                cart: true
+            }
+        });
 
         return {
             ...createUser,
@@ -31,7 +39,8 @@ export class UserService {
             select: {
                 id: true,
                 name: true,
-                email: true
+                email: true,
+                cart: true
             },
         });
     }
@@ -42,7 +51,8 @@ export class UserService {
             select: {
                 id: true,
                 name: true,
-                email: true
+                email: true,
+                cart: true,
             },
         });
     }
@@ -62,6 +72,12 @@ export class UserService {
                 name: body.name ? body.name : findUser.name,
                 email: body.email ? body.email : findUser.email,
                 password: body.password ? body.password : findUser.password,
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                cart: true,
             }
         });
         return {
