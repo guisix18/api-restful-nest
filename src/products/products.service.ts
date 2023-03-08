@@ -18,4 +18,10 @@ export class ProductsService {
 
         return createProduct;
     }
+
+    async list(): Promise<Products[]> {
+        const products = await this.prisma.products.findMany()
+
+        return products;
+    }
 }
