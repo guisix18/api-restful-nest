@@ -15,4 +15,22 @@ model User {
   name     String 
   email    String @unique
   password String
+  cart Cart[]
+}
+
+model Cart {
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  products Products @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+
+  @@id([userId, productId])
+}
+
+model Products {
+  id String @id @unique
+  product_name String
+  price Float
+  description String
+  cart Cart[]
 }
