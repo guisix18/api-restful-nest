@@ -24,4 +24,12 @@ export class ProductsService {
 
         return products;
     }
+
+    async listOne(id: string): Promise<Products> {
+        const oneProduct = await this.prisma.products.findFirstOrThrow({
+            where: { id }
+        })
+
+        return oneProduct
+    }
 }
