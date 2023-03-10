@@ -1,6 +1,6 @@
-import { Body, Controller, Post, Get, Res, Param } from "@nestjs/common";
+import { Body, Controller, Post, Get, Put, Res, Param } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
-import { ProductBodyDto } from "./dto/products.dto";
+import { ProductBodyDto, ProductBodyUpdateDto } from "./dto/products.dto";
 import { ProductsService } from "./products.service";
 import { response, Response } from "express";
 import { IsPublic } from "src/auth/decorators/is-public.decorator";
@@ -28,5 +28,11 @@ export class ProductsController {
     async listOneProduct(@Res() response: Response, @Param('id') id: string) {
         const oneProduct = await this.productsService.listOne(id);
         return response.status(200).send(oneProduct)
+    }
+
+    @Put('/:id')
+    async updateProduct(@Res() response: Response, @Param('id') id: string, @Body() body: ProductBodyUpdateDto) {
+        const updatedProduct = await this.productsService.update(id, body);
+        return response.status(200).send(updatedProduct)
     }
 }
