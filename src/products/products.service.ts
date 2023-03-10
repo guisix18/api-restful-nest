@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { Prisma, Products } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { PrismaService } from "src/prisma/prisma.service";
-import { ProductBodyDto } from "./dto/products.dto";
+import { ProductBodyDto, ProductBodyUpdateDto } from "./dto/products.dto";
 
 @Injectable()
 export class ProductsService {
@@ -31,5 +31,28 @@ export class ProductsService {
         })
 
         return oneProduct
+    }
+
+    async update(id: string, body: ProductBodyUpdateDto): Promise<Products> {
+
+        const findProduct = await this.prisma.products.findFirstOrThrow({
+            where: {
+                id
+            }
+        })
+
+        const updatedProduct = await this.prisma.products.update({
+            where: {
+                id
+            },
+            data: {
+                product_name: body.product_name ? body.product_name : findProduct.product_name,
+                price: body.price ? body.price : findProduct.price,
+                description: body.description ? body.description : findProduct.description
+            }
+        })
+
+        return updatedProduct;
+
     }
 }
