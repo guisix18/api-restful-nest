@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Put, Res, Param } from "@nestjs/common";
+import { Body, Controller, Post, Get, Put, Res, Param, Delete } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { ProductBodyDto, ProductBodyUpdateDto } from "./dto/products.dto";
 import { ProductsService } from "./products.service";
@@ -34,5 +34,13 @@ export class ProductsController {
     async updateProduct(@Res() response: Response, @Param('id') id: string, @Body() body: ProductBodyUpdateDto) {
         const updatedProduct = await this.productsService.update(id, body);
         return response.status(200).send(updatedProduct)
+    }
+
+    @Delete('/:id')
+    async deleteProduct(@Res() response: Response, @Param('id') id: string) {
+        await this.productsService.delete(id);
+        return response.status(202).send({
+            message: "Product deleted"
+        })
     }
 }
