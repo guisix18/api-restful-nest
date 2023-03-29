@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { VerifyIdMiddleware } from '../middlewares/userId.middleware';
-import { VerifyUserEmailMiddleware } from 'src/middlewares/verifyUserEmail.middleware';
+import { VerifyIdMiddleware } from '../middlewares/User/userId.middleware';
+import { VerifyUserEmailMiddleware } from 'src/middlewares/User/verifyUserEmail.middleware';
 import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
