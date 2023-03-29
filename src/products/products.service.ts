@@ -55,4 +55,21 @@ export class ProductsService {
         return updatedProduct;
 
     }
+
+    async delete(id: string): Promise<void> {
+        const findProduct = await this.prisma.products.findFirstOrThrow({
+            where: {
+                id
+            }
+        })
+
+        await this.prisma.products.delete({
+            where: {
+                id: findProduct.id
+            }
+        })
+
+        return
+
+    }
 }
