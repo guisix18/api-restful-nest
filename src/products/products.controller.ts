@@ -2,7 +2,7 @@ import { Body, Controller, Post, Get, Put, Res, Param, Delete } from "@nestjs/co
 import { ApiTags } from "@nestjs/swagger";
 import { ProductBodyDto, ProductBodyUpdateDto } from "./dto/products.dto";
 import { ProductsService } from "./products.service";
-import { response, Response } from "express";
+import { Response } from "express";
 import { IsPublic } from "src/auth/decorators/is-public.decorator";
 
 @ApiTags('Products')
