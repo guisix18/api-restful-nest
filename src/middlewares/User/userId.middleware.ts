@@ -1,6 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ERROR_USER_ID_NOT_FOUND_MIDDLEWARE } from 'src/utils/User/user.utils';
 
 @Injectable()
 export class VerifyIdMiddleware implements NestMiddleware {
@@ -13,7 +14,7 @@ export class VerifyIdMiddleware implements NestMiddleware {
     const findUser = await this.prisma.user.findFirst({ where: { id } });
 
     if (!findUser) {
-      return res.status(400).json({ message: 'User not found' });
+      return res.status(400).json({ ERROR_USER_ID_NOT_FOUND_MIDDLEWARE });
     }
 
     next();
