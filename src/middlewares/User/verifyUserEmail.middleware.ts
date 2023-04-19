@@ -1,6 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ERROR_EMAIL_MIDDLEWARE } from 'src/utils/User/user.utils';
 
 @Injectable()
 export class VerifyUserEmailMiddleware implements NestMiddleware {
@@ -15,7 +16,7 @@ export class VerifyUserEmailMiddleware implements NestMiddleware {
     if (findUser) {
       return res
         .status(400)
-        .json({ message: 'This email is already being used' });
+        .json({ ERROR_EMAIL_MIDDLEWARE });
     }
 
     next();
