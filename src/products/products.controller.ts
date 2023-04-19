@@ -4,11 +4,12 @@ import { ProductBodyDto, ProductBodyUpdateDto } from "./dto/products.dto";
 import { ProductsService } from "./products.service";
 import { Response } from "express";
 import { IsPublic } from "src/auth/decorators/is-public.decorator";
+import { DELETE_PRODUCT_CONTROLLER } from "src/utils/Product/products.utils";
 
 @ApiTags('Products')
 @Controller('/products')
 export class ProductsController {
-    constructor(private readonly productsService: ProductsService) {}
+    constructor(private readonly productsService: ProductsService) { }
 
     @Post()
     async createProduct(@Res() response: Response, @Body() body: ProductBodyDto) {
@@ -40,7 +41,7 @@ export class ProductsController {
     async deleteProduct(@Res() response: Response, @Param('id') id: string) {
         await this.productsService.delete(id);
         return response.status(202).send({
-            message: "Product deleted"
+            DELETE_PRODUCT_CONTROLLER
         })
     }
 }
