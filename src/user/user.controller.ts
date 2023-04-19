@@ -13,6 +13,7 @@ import { Response } from 'express';
 import { IsPublic } from 'src/auth/decorators/is-public.decorator';
 import { UserBodyDto, UserBodyUpdateDto } from './dto/user.dto';
 import { UserService } from './user.service';
+import { DELETE_USER_CONTROLLER } from 'src/utils/User/user.utils';
 
 @ApiTags('User')
 @Controller('/user')
@@ -53,7 +54,7 @@ export class UserController {
   async deleteUser(@Res() response: Response, @Param('id') id: string) {
     await this.userService.delete(id);
     return response.status(200).send({
-      message: 'User deleted',
+      DELETE_USER_CONTROLLER
     });
   }
 }
