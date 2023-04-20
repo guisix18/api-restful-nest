@@ -4,8 +4,8 @@ import { User } from './entities/user.entities';
 import { randomUUID } from 'crypto';
 import * as bcrypt from 'bcrypt';
 import { UserList } from './entities/user.entities';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { Prisma } from '@prisma/client';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UserService {
